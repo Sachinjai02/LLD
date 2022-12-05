@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Scanner;
+
 public class Player {
 
     public Player(String name, char symbol, PlayerType type) {
@@ -39,4 +41,14 @@ public class Player {
     private String name;
     private PlayerType type;
 
+    public Move makeMove(Board board) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter row (0 based)");
+        int row = scanner.nextInt();
+        System.out.println("Enter col (0 based)");
+        int col = scanner.nextInt();
+        return new Move(row, col);
+
+    }
 }

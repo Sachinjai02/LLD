@@ -4,5 +4,5 @@ import models.Board;
 import models.Move;
 
 public interface WinningStrategy {
-    public void checkForVictory(Move move, Board board);
+    public boolean checkForVictory(Move move, Board board);
 }

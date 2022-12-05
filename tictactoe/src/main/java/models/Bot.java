@@ -1,5 +1,8 @@
 package models;
 
+import factories.BotPlayingStrategyFactory;
+import strategies.playing.BotPlayingStrategy;
+
 public class Bot extends Player {
     private DifficultyLevel level;
 
@@ -15,5 +18,9 @@ public class Bot extends Player {
         this.level = level;
     }
 
-
+    @Override
+    public Move makeMove(Board board) {
+        BotPlayingStrategy strategy = BotPlayingStrategyFactory.getBotPlayingStrategyByDifficultyLevel(this.level);
+        return strategy.makeMove(board);
+    }
 }

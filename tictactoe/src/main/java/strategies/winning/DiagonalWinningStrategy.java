@@ -5,7 +5,7 @@ import models.Move;
 
 public class DiagonalWinningStrategy implements WinningStrategy{
     @Override
-    public void checkForVictory(Move move, Board board) {
-        
+    public boolean checkForVictory(Move move, Board board) {
+        return false;
     }
 }
