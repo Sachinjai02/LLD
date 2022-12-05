@@ -11,4 +11,9 @@ public class Move {
 
     private Cell cell;
 
+    public Move(Cell cell, Player player) {
+        this.cell = cell;
+        this.cell.setPlayer(player);
+    }
+
 }

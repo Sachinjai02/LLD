@@ -1,6 +1,16 @@
 package models;
 
 public class Player {
+
+    public Player(String name, char symbol, PlayerType type) {
+        this.name = name;
+        this.symbol = new Symbol(symbol);
+        this.type = type;
+    }
+
+    public Player() {
+
+    }
     public Symbol getSymbol() {
         return symbol;
     }

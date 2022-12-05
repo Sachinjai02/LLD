@@ -1,11 +1,14 @@
 package models;
 
-import exception.GameBuilderException;
+import exceptions.GameBuilderException;
+import factories.WinningStrategyFactory;
 import strategies.winning.WinningStrategy;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Game {
     private List<Player> playerList;
@@ -23,24 +26,18 @@ public class Game {
         return new GameBuilder();
     }
 
+    public void start() {
+
+    }
+
 
     public static class GameBuilder {
 
         private List<Player> playerList;
-        private List<Move> moves;
-        private int lastPlayerIdx;
-        private List<WinningStrategy> winningStrategies;
-        private Board board;
-        private GameStatus status;
-        private Player winner;
+        private List<String> winningStrategies;
+
 
         public GameBuilder() {
-            this.lastPlayerIdx = -1;
-            this.status = GameStatus.RUNNING;
-        }
-
-        public List<Player> getPlayerList() {
-            return playerList;
         }
 
         public GameBuilder setPlayerList(List<Player> playerList) {
@@ -48,64 +45,16 @@ public class Game {
             return this;
         }
 
-        public List<Move> getMoves() {
-            return moves;
-        }
-
-        public GameBuilder setMoves(List<Move> moves) {
-            this.moves = moves; return this;
-        }
-
-        public int getLastPlayerIdx() {
-            return lastPlayerIdx;
-        }
-
-        public GameBuilder setLastPlayerIdx(int lastPlayerIdx) {
-            this.lastPlayerIdx = lastPlayerIdx;
-            return this;
-        }
-
-        public List<WinningStrategy> getWinningStrategies() {
-            return winningStrategies;
-        }
-
-        public GameBuilder setWinningStrategies(List<WinningStrategy> winningStrategies) {
+        public GameBuilder setWinningStrategies(List<String> winningStrategies) {
             this.winningStrategies = winningStrategies;
             return this;
         }
 
-        public Board getBoard() {
-            return board;
-        }
+        public Game build()  {
 
-        public GameBuilder setBoard(Board board) {
-            this.board = board;
-            return this;
-        }
-
-        public GameStatus getStatus() {
-            return status;
-        }
-
-        public GameBuilder setStatus(GameStatus status) {
-            this.status = status;
-            return this;
-        }
-
-        public Player getWinner() {
-            return winner;
-        }
-
-        public GameBuilder setWinner(Player winner) {
-            this.winner = winner;
-            return this;
-        }
-
-        public Game build() throws GameBuilderException {
-            Game game = new Game();
             //perform all validations;
-            if(this.playerList.size() != this.board.getDimension() - 1) {
-                throw new GameBuilderException("Invalid number of players for board of size " + this.board.getDimension());
+            if(this.playerList.size() < 2) {
+                throw new GameBuilderException("At least there should be 2 players for a game !");
             }
             //validate each player has a unique symbol
             Set<Character> playerSymbols = new HashSet<>();
@@ -117,12 +66,16 @@ public class Game {
                 playerSymbols.add(ch);
             }
 
-            game.board = this.board;
-            game.lastPlayerIdx = this.lastPlayerIdx;
+            Game game = new Game();
+            game.board = new Board(this.playerList.size()+1);
+            game.lastPlayerIdx = -1;
             game.playerList = this.playerList;
-            game.status = this.status;
-            game.winningStrategies = this.winningStrategies;
-
+            game.status = GameStatus.STARTED;
+            game.moves = new ArrayList<>();
+            game.winningStrategies = this.winningStrategies
+                    .stream()
+                    .map(winningStrategyName -> WinningStrategyFactory.getGameWinningStrategyByName(winningStrategyName))
+                    .collect(Collectors.toList());
             return game;
         }
     }

@@ -1,6 +1,6 @@
-package exception;
+package exceptions;
 
-public class GameBuilderException extends Exception {
+public class GameBuilderException extends RuntimeException {
     public GameBuilderException(String message) {
         super(message);
     }
