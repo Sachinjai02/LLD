@@ -54,6 +54,7 @@ public class Game {
                 if(strategy.checkForVictory(move, board)) {
                     this.status = GameStatus.FINISHED;
                     this.winner = nextPlayer;
+                    printGame();
                     System.out.println("Congratulations " + this.winner.getName() + " ! You have won. ");
                     break;
                 }
@@ -62,6 +63,7 @@ public class Game {
             //check for draw
             if(moves.size() == maxMoves) {
                 this.status = GameStatus.DRAWN;
+                printGame();
                 System.out.println("Alas! The game has resulted in a draw.");
                 break;
             }
