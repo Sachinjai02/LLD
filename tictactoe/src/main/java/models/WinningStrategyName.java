@@ -5,4 +5,10 @@ public enum WinningStrategyName {
     COLUMN,
     DIAGONAL,
 
+    OPTROW,
+
+    OPTCOLUMN,
+
+    OPTDIAGONAL
+
 }

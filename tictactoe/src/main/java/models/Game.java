@@ -61,7 +61,7 @@ public class Game {
             }
 
             //check for draw
-            if(moves.size() == maxMoves) {
+            if(this.status == GameStatus.INPROGRESS && moves.size() == maxMoves) {
                 this.status = GameStatus.DRAWN;
                 printGame();
                 System.out.println("Alas! The game has resulted in a draw.");

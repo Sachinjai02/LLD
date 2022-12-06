@@ -1,10 +1,7 @@
 package factories;
 
 import models.WinningStrategyName;
-import strategies.winning.ColumnWinningStrategy;
-import strategies.winning.DiagonalWinningStrategy;
-import strategies.winning.RowWinningStrategy;
-import strategies.winning.WinningStrategy;
+import strategies.winning.*;
 
 public class WinningStrategyFactory {
     public static WinningStrategy getGameWinningStrategyByName(String winningStrategyName) {
@@ -13,7 +10,9 @@ public class WinningStrategyFactory {
             case DIAGONAL -> new DiagonalWinningStrategy();
             case COLUMN -> new ColumnWinningStrategy();
             case ROW ->  new RowWinningStrategy();
-            default -> new RowWinningStrategy();
+            case OPTROW -> new OptimalRowWinningStrategy();
+            case OPTCOLUMN -> new OptimalColumnWinningStrategy();
+            case OPTDIAGONAL -> new OptimalDiagonalWinningStrategy();
         };
     }
 }

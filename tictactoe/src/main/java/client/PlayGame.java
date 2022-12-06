@@ -47,9 +47,9 @@ public class PlayGame {
 
         List<String> winningStrategiesNames = new ArrayList<>();
         //For now hard coding winning strategies
-        winningStrategiesNames.add("row");
-        winningStrategiesNames.add("column");
-        winningStrategiesNames.add("diagonal");
+        winningStrategiesNames.add("optrow");
+        winningStrategiesNames.add("optcolumn");
+        winningStrategiesNames.add("optdiagonal");
 
        return  Game.getBuilder()
                 .setPlayerList(players)
