@@ -1,8 +1,6 @@
 package controllers;
 
-import dtos.BaseResponseDto;
-import dtos.CreateParkingLotRequestDto;
-import dtos.CreateParkingLotResponse;
+import dtos.*;
 import models.ParkingLot;
 import services.ParkingLotService;
 
@@ -14,11 +12,18 @@ public class ParkingLotController {
         this.parkingLotService = parkingLotService;
     }
 
-    public BaseResponseDto<CreateParkingLotResponse> createParkingLot(CreateParkingLotRequestDto request) {
+    public BaseResponseDto<CreateParkingLotResponseData> createParkingLot(CreateParkingLotRequestDto request) {
         ParkingLot parkingLot = parkingLotService.createParkingLot(request.getAddress(), request.getNumberOfFloors());
-        BaseResponseDto<CreateParkingLotResponse> baseResponse = new BaseResponseDto<CreateParkingLotResponse>(new CreateParkingLotResponse(parkingLot));
-        baseResponse.setStatus("Success");
-        return baseResponse;
+        BaseResponseDto<CreateParkingLotResponseData> responseDto = new BaseResponseDto<CreateParkingLotResponseData>(new CreateParkingLotResponseData(parkingLot));
+        responseDto.setStatus("Success");
+        return responseDto;
+    }
+
+    public BaseResponseDto<UpdateParkingLotResponseData> updateParkingLotAddress(UpdateParkingLotRequestDto requestDto) {
+        ParkingLot parkingLot = parkingLotService.updateParkingLot(requestDto.getParkingLotId(), requestDto.getAddress());
+        BaseResponseDto<UpdateParkingLotResponseData> responseDto = new BaseResponseDto<>(new UpdateParkingLotResponseData(parkingLot));
+        responseDto.setStatus("Success");
+        return responseDto;
     }
 
 }

@@ -2,10 +2,10 @@ package dtos;
 
 import models.ParkingLot;
 
-public class CreateParkingLotResponse {
+public class UpdateParkingLotResponseData {
     private ParkingLot parkingLot;
 
-    public CreateParkingLotResponse(ParkingLot parkingLot) {
+    public UpdateParkingLotResponseData(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
     public ParkingLot getParkingLot() {

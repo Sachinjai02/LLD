@@ -32,4 +32,11 @@ public class ParkingLotService {
         }
         return parkingFloors;
     }
+
+    public ParkingLot updateParkingLot(Long parkingLotId, String newAddress) {
+        ParkingLot parkingLot = parkingLotRepository.getById(parkingLotId);
+        parkingLot.setAddress(newAddress);
+        parkingLotRepository.update(parkingLot);
+        return parkingLot;
+    }
 }

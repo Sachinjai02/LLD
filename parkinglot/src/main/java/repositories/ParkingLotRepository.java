@@ -18,4 +18,13 @@ public class ParkingLotRepository {
         nextId++;
         return parkingLot;
     }
+
+    public ParkingLot getById(Long parkingLotId) {
+        return parkingLots.get(parkingLotId);
+    }
+
+
+    public void update(ParkingLot parkingLot) {
+        parkingLots.put(parkingLot.getId(), parkingLot);
+    }
 }
