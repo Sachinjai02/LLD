@@ -15,7 +15,7 @@ public class ParkingLotController {
     }
 
     public BaseResponseDto<CreateParkingLotResponse> createParkingLot(CreateParkingLotRequestDto request) {
-        ParkingLot parkingLot = parkingLotService.createParkingLot(request.getAddress());
+        ParkingLot parkingLot = parkingLotService.createParkingLot(request.getAddress(), request.getNumberOfFloors());
         BaseResponseDto<CreateParkingLotResponse> baseResponse = new BaseResponseDto<CreateParkingLotResponse>(new CreateParkingLotResponse(parkingLot));
         baseResponse.setStatus("Success");
         return baseResponse;
