@@ -6,6 +6,10 @@ public class Gate extends BaseModel {
     private String gateNumber;
     private GateStatus status;
 
+    public Gate() {
+        super();
+    }
+
     public GateType getType() {
         return type;
     }

@@ -28,7 +28,7 @@ public class ParkingLotService {
     private List<ParkingFloor> getFloorList(int numberFloors) {
         List<ParkingFloor> parkingFloors = new ArrayList<>();
         for(int i=0;i<numberFloors;++i) {
-            parkingFloors.add(parkingFloorRepository.save(i+""));
+            parkingFloors.add(parkingFloorRepository.save((i+1) + ""));
         }
         return parkingFloors;
     }

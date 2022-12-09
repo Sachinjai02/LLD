@@ -3,7 +3,7 @@ package models;
 public class ElectricSlot extends BaseModel {
     private Meter meter;
 
-    private Slot baseSlot;
+    private ParkingSlot baseParkingSlot;
 
     public Meter getMeter() {
         return meter;
@@ -13,11 +13,11 @@ public class ElectricSlot extends BaseModel {
         this.meter = meter;
     }
 
-    public Slot getBaseSlot() {
-        return baseSlot;
+    public ParkingSlot getBaseSlot() {
+        return baseParkingSlot;
     }
 
-    public void setBaseSlot(Slot baseSlot) {
-        this.baseSlot = baseSlot;
+    public void setBaseSlot(ParkingSlot baseParkingSlot) {
+        this.baseParkingSlot = baseParkingSlot;
     }
 }

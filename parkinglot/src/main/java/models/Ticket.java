@@ -1,12 +1,14 @@
 package models;
 
+import java.util.Date;
+
 public class Ticket extends BaseModel {
     private Operator operator;
     private Vehicle vehicle;
     private Gate entryGate;
     private Bill bill;
-    private long entryTime;
-    private Slot allotedSlot;
+    private Date entryTime;
+    private ParkingSlot allotedParkingSlot;
 
     public Operator getOperator() {
         return operator;
@@ -40,19 +42,19 @@ public class Ticket extends BaseModel {
         this.bill = bill;
     }
 
-    public long getEntryTime() {
+    public Date getEntryTime() {
         return entryTime;
     }
 
-    public void setEntryTime(long entryTime) {
+    public void setEntryTime(Date entryTime) {
         this.entryTime = entryTime;
     }
 
-    public Slot getAllotedSlot() {
-        return allotedSlot;
+    public ParkingSlot getAllotedSlot() {
+        return allotedParkingSlot;
     }
 
-    public void setAllotedSlot(Slot allotedSlot) {
-        this.allotedSlot = allotedSlot;
+    public void setAllotedSlot(ParkingSlot allotedParkingSlot) {
+        this.allotedParkingSlot = allotedParkingSlot;
     }
 }

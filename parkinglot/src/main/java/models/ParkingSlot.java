@@ -1,6 +1,6 @@
 package models;
 
-public class Slot extends BaseModel {
+public class ParkingSlot extends BaseModel {
     private String slotNumber;
     private SlotType type;
     private SlotStatus status;
