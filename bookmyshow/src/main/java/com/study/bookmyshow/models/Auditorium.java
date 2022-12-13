@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class Auditorium extends BaseModel {
     private String name;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Seat> seatList;
 
     @ElementCollection

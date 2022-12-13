@@ -9,4 +9,5 @@ import lombok.Data;
 @Table(name="Users")
 public class User extends BaseModel {
     private String name;
+    private String email;
 }

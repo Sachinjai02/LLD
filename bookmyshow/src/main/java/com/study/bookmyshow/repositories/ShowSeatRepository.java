@@ -1,8 +1,6 @@
 package com.study.bookmyshow.repositories;
 
-import com.study.bookmyshow.models.Show;
 import com.study.bookmyshow.models.ShowSeat;
-import com.study.bookmyshow.models.Ticket;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
