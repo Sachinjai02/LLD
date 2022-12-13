@@ -29,9 +29,9 @@ public class Main {
         BaseResponseDto<CreateParkingLotResponseData> parkingLotResponse = parkingLotController.createParkingLot(requestDto);
         ParkingLot parkingLot = parkingLotResponse.getData().getParkingLot();
         if(parkingLotResponse.getStatus().equalsIgnoreCase("success")) {
-            System.out.println("Error during creation of Parking lot");
-        } else {
             System.out.println("Parking lot created " + parkingLot.getId());
+        } else {
+            System.out.println("Error during creation of Parking lot");
         }
 
         UpdateParkingLotRequestDto updateParkingLotRequestDto = new UpdateParkingLotRequestDto();
