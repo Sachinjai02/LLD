@@ -15,7 +15,7 @@ public class Ticket extends BaseModel {
     @ManyToOne
     private Show show;
     private Date bookingTime;
-    private int amount;
+    private double amount;
     @Enumerated(EnumType.ORDINAL)
     private TicketStatus ticketStatus;
     @ManyToMany
