@@ -13,6 +13,5 @@ import java.util.List;
 public interface ShowSeatRepository extends JpaRepository<ShowSeat, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select id from show_seat where id in (:showSeatIds)")
-    List<ShowSeat> findAllByIdForUpdate(Iterable<Long> showSeatIds);
+    List<ShowSeat> findAllByIdIn(Iterable<Long> showSeatIds);
 }

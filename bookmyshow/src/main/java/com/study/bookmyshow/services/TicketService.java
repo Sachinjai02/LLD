@@ -45,19 +45,19 @@ public class TicketService {
         List<ShowSeat> showSeats = this.showSeatRepository.findAllById(showSeatIds);
         for(ShowSeat showSeat : showSeats) {
             if(! showSeat.getStatus().equals(ShowSeatStatus.AVAILABLE)) {
-                throw new SeatNotAvailableException("Seat is not available for booking " + showSeat.getSeat().getName());
+                throw new SeatNotAvailableException("Seat " + showSeat.getSeat().getName() + " is not available for booking." );
             }
         }
 
-        showSeats = this.showSeatRepository.findAllByIdForUpdate(showSeatIds);
+        showSeats = this.showSeatRepository.findAllByIdIn(showSeatIds);
         for(ShowSeat showSeat : showSeats) {
             if(! showSeat.getStatus().equals(ShowSeatStatus.AVAILABLE)) {
-                throw new SeatNotAvailableException("Seat is not available for booking " + showSeat.getSeat().getName());
+                throw new SeatNotAvailableException("Seat " + showSeat.getSeat().getName() + " is not available for booking." );
             }
             showSeat.setStatus(ShowSeatStatus.BOOKED);
         }
 
-        this.showSeatRepository.saveAllAndFlush(showSeats);
+        this.showSeatRepository.saveAll(showSeats);
 
         Ticket ticket = new Ticket();
         ticket.setBookingTime(new Date());

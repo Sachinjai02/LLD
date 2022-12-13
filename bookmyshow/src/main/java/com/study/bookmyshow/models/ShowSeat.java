@@ -15,4 +15,9 @@ public class ShowSeat extends BaseModel{
     private Seat seat;
     @Enumerated(EnumType.ORDINAL)
     private ShowSeatStatus status;
+
+    @Override
+    public String toString() {
+        return "Show : " + show.getId() + ":: Seat :" + seat.getName();
+    }
 }
