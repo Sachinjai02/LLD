@@ -31,10 +31,6 @@ public class EmployeeHierarchyGraphBasedStrategy implements EmployeeHierarchyMan
 
     @Override
     public void display() {
-        Map<String, Boolean> visited = new HashMap<>();
-        System.out.println("topLevel" + orderedTopLevelManagers);
-        System.out.println("suborder" + subordinates);
-        System.out.println("Y subOrder" + employeeGraph.get("Y"));
         orderedTopLevelManagers.forEach(
                 manager -> {
                     displayHierarchy(manager, employeeGraph, new HashMap<>(), 0);
@@ -53,7 +49,6 @@ public class EmployeeHierarchyGraphBasedStrategy implements EmployeeHierarchyMan
         visited.put(manager, true);
 
         if(employeeGraph.get(manager) != null) {
-
             employeeGraph.get(manager).forEach(reportee ->
                     displayHierarchy(reportee, employeeGraph, visited, distance + manager.length() + 4)
             );
