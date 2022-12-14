@@ -15,20 +15,20 @@ public class Main {
         EmployeeService employeeService = new EmployeeService(strategy);
         EmployeeController employeeController = new EmployeeController(employeeService);
 
-        employeeController.addEmployeeRelation("G", "B");
-        employeeController.addEmployeeRelation("A", "G");
-        employeeController.addEmployeeRelation("G", "C");
-        employeeController.addEmployeeRelation("F", "I");
-        employeeController.addEmployeeRelation("J", "Y");
-        employeeController.addEmployeeRelation("A", "F");
-        employeeController.addEmployeeRelation("T", "M");
-        employeeController.addEmployeeRelation("D", "K");
-        employeeController.addEmployeeRelation("Y", "Z");
-        employeeController.addEmployeeRelation("Y", "P");
-        employeeController.addEmployeeRelation("P", "T");
-        employeeController.addEmployeeRelation("A", "H");
-        employeeController.addEmployeeRelation("H", "D");
-        employeeController.addEmployeeRelation("D", "P");
+        employeeController.addEmployeeRelation("Geeta", "Bibek");
+        employeeController.addEmployeeRelation("AstroYogi", "Geeta");
+        employeeController.addEmployeeRelation("Geeta", "Cartoonist");
+        employeeController.addEmployeeRelation("Frivolous", "Indigo");
+        employeeController.addEmployeeRelation("Joker", "Yogi");
+        employeeController.addEmployeeRelation("AstroYogi", "Frivolous");
+        employeeController.addEmployeeRelation("Twister", "Mango");
+        employeeController.addEmployeeRelation("Dreadful", "KrorePati");
+        employeeController.addEmployeeRelation("Yogi", "Zombie");
+        employeeController.addEmployeeRelation("Yogi", "Patriot");
+        employeeController.addEmployeeRelation("Patriot", "Twister");
+        employeeController.addEmployeeRelation("AstroYogi", "Hikari");
+        employeeController.addEmployeeRelation("Hikari", "Dreadful");
+        employeeController.addEmployeeRelation("Dreadful", "Patriot");
 
         employeeController.display();
     }

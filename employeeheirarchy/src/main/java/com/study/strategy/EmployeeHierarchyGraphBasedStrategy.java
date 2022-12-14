@@ -50,7 +50,7 @@ public class EmployeeHierarchyGraphBasedStrategy implements EmployeeHierarchyMan
 
         if(employeeGraph.get(manager) != null) {
             employeeGraph.get(manager).forEach(reportee ->
-                    displayHierarchy(reportee, employeeGraph, visited, distance + manager.length() + 4)
+                    displayHierarchy(reportee, employeeGraph, visited, distance + manager.length())
             );
         }
 
