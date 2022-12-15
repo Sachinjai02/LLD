@@ -18,4 +18,16 @@ public class Player {
         }
         this.status = PlayerStatus.IN_GAME;
     }
+
+    public Move makeMove(Game game) {
+        return null;
+    }
+
+    public PlayerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlayerStatus status) {
+        this.status = status;
+    }
 }

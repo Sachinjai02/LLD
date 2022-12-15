@@ -1,6 +1,8 @@
 package models;
 
 import exceptions.GameBuilderException;
+import strategies.ButtonUnlockStrategy;
+import strategies.HandleMoveStrategy;
 
 import java.util.*;
 
@@ -10,12 +12,59 @@ public class Game {
     private Dice dice;
     private List<Player> playerList;
     private LeaderBoard leaderBoard;
-    private int lastPlayerIdx;
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+
     private GameStatus status;
     private int numButtons;
 
+    private ButtonUnlockStrategy unlockStrategy;
+
+    private HandleMoveStrategy moveStrategy;
+
+    private List<Move> moves;
+
     private Game() {
 
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Dice getDice() {
+        return dice;
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public LeaderBoard getLeaderBoard() {
+        return leaderBoard;
+    }
+
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public int getNumButtons() {
+        return numButtons;
+    }
+
+    public ButtonUnlockStrategy getUnlockStrategy() {
+        return unlockStrategy;
+    }
+
+    public HandleMoveStrategy getMoveStrategy() {
+        return moveStrategy;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
     }
 
     public static GameBuilder getBuilder() {
@@ -27,10 +76,13 @@ public class Game {
         private int maxDiceNumber;
         private int numButtons;
 
-
         private List<Entity> entities;
 
         private List<String> playerNames;
+
+        private ButtonUnlockStrategy unlockStrategy;
+
+        private HandleMoveStrategy moveStrategy;
 
         public List<String> getPlayerNames() {
             return playerNames;
@@ -89,7 +141,7 @@ public class Game {
             //validate if entities do not collide
             /*
                 1. start != end for any of them
-                2. start, end != 1, maxNumber
+                2. start, end != 1 && start, end != maxNumber
                 3. No two entities collide
              */
             Set<Integer> unique = new HashSet<>();
@@ -121,12 +173,13 @@ public class Game {
 
             game.board = board;
             game.status = GameStatus.IN_PROGRESS;
-            game.lastPlayerIdx = -1;
             game.dice = new Dice(maxDiceNumber);
             game.leaderBoard = new LeaderBoard();
             game.numButtons = numButtons;
             game.playerList = players;
-
+            game.moveStrategy = moveStrategy;
+            game.unlockStrategy = unlockStrategy;
+            game.moves = new ArrayList<>();
             return game;
         }
 
@@ -136,6 +189,24 @@ public class Game {
 
         public GameBuilder setEntities(List<Entity> entities) {
             this.entities = entities;
+            return this;
+        }
+
+        public ButtonUnlockStrategy getUnlockStrategy() {
+            return unlockStrategy;
+        }
+
+        public GameBuilder setUnlockStrategy(ButtonUnlockStrategy unlockStrategy) {
+            this.unlockStrategy = unlockStrategy;
+            return this;
+        }
+
+        public HandleMoveStrategy getMoveStrategy() {
+            return moveStrategy;
+        }
+
+        public GameBuilder setMoveStrategy(HandleMoveStrategy moveStrategy) {
+            this.moveStrategy = moveStrategy;
             return this;
         }
     }
