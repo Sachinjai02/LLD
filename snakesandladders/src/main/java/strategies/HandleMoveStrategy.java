@@ -1,9 +1,9 @@
 package strategies;
 
-import models.Board;
 import models.Button;
+import models.Game;
 import models.Player;
 
 public interface HandleMoveStrategy {
-    void processMove(Board board, Player player, Button button, int diceValue);
+    void processMove(Game game, Player player, Button button, int diceValue);
 }
