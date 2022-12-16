@@ -25,8 +25,9 @@ public class DefaultHandleMoveStrategy implements HandleMoveStrategy {
 
         } else if(newValue < maxNumberOnBoard) {
             if(positionToEntityMap.containsKey(newValue)) {
-                newValue = positionToEntityMap.get(newValue).getEnd();
-                if(newValue > button.getCurrPosition()) {
+                Entity entity = positionToEntityMap.get(newValue);
+                newValue = entity.getEnd();
+                if(newValue > entity.getStart()) {
                     System.out.println("Wow! You are advanced to cell " + newValue);
                 } else {
                     System.out.println("Alas! You are stung back to cell " + newValue);
