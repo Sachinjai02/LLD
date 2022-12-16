@@ -18,15 +18,15 @@ public class Game {
     public static final String CYAN = "\033[0;36m";    // CYAN
     public static final String WHITE = "\033[0;37m";   // WHITE
 
-    private static final String[] colors = new String[] { BLACK,
-            GREEN, RED,  BLUE, YELLOW, BLACK, YELLOW, PURPLE,
-            CYAN, WHITE };
+    private static final String[] colors = new String[] {
+            GREEN, BLUE, YELLOW, RED, PURPLE,
+            CYAN, WHITE, BLACK};
     private Board board;
     private Dice dice;
     private List<Player> playerList;
     private LeaderBoard leaderBoard;
 
-    private Map<Integer, Set<Drawable>> drawablesMap;
+
 
     public void setStatus(GameStatus status) {
         this.status = status;
@@ -85,6 +85,7 @@ public class Game {
     public static GameBuilder getBuilder() {
         return new GameBuilder();
     }
+
 
     public static class GameBuilder {
         private int boardSize;
@@ -175,7 +176,7 @@ public class Game {
             //Board
             Board board = new Board(boardSize);
             Map<Integer, Entity> positionToEntityMap = board.getPositionToEntityMap();
-            Map<Integer, Set<Drawable>> map = new HashMap<>();
+            Map<Integer, Set<Drawable>> drawablesMap = board.getDrawablesMap();
             for(Entity entity : entities) {
                 positionToEntityMap.put(entity.getStart(), entity);
             }
@@ -186,12 +187,12 @@ public class Game {
             for(String name: playerNames) {
                 int idx = players.size();
                 Player player = new Player(numButtons,
-                        name, Character.valueOf( (char) ('A' + (idx+1)))
+                        name, Character.valueOf( (char) ('A' + (idx)))
                 , idx < colors.length ? colors[idx] : "");
                 players.add(player);
                 allButtons.addAll(player.getButtonList());
             }
-            map.put(0, allButtons);
+            drawablesMap.put(0, allButtons);
 
             game.board = board;
             game.status = GameStatus.IN_PROGRESS;
@@ -202,7 +203,7 @@ public class Game {
             game.moveStrategy = moveStrategy;
             game.unlockStrategy = unlockStrategy;
             game.moves = new ArrayList<>();
-            game.drawablesMap = map;
+
 
             return game;
         }
@@ -233,5 +234,7 @@ public class Game {
             this.moveStrategy = moveStrategy;
             return this;
         }
+
+
     }
 }

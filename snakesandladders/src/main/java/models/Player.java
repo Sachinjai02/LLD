@@ -41,7 +41,7 @@ public class Player  {
         System.out.println("Rolling the dice ... Got " + diceValue);
 
         if(selectedButton.getStatus().equals(ButtonStatus.LOCKED)) {
-            game.getUnlockStrategy().unlock(this, selectedButton, diceValue, game.getDice().getMaxNumber());
+            game.getUnlockStrategy().unlock(game, selectedButton, diceValue, game.getDice().getMaxNumber());
         } else {
             game.getMoveStrategy().processMove(game, this, selectedButton, diceValue);
         }

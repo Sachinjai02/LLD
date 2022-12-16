@@ -52,4 +52,9 @@ public abstract class Entity implements Drawable {
     public String getColor() {
         return this.entityType.getColor();
     }
+
+    @Override
+    public String getId() {
+        return this.entityType.name().charAt(0) + "[" + end + "]";
+    }
 }

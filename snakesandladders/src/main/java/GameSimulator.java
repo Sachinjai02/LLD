@@ -12,9 +12,7 @@ public class GameSimulator {
 
 
     public static void main(String[] args) {
-       /* System.out.println(RED + "RED COLORED" +
-                RESET + " NORMAL");
-       */
+
         Game.GameBuilder gameBuilder = Game.getBuilder();
 
         List<Entity> entitiesList = new ArrayList<>();
