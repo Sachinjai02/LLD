@@ -1,11 +1,16 @@
 package models;
 
-public class Button {
+public class Button implements Drawable {
     private int currPosition;
     private ButtonStatus status;
+    private String id;
 
-    public Button() {
+    private Player parent;
+
+    public Button(String id, Player player) {
         this.status = ButtonStatus.LOCKED;
+        this.id = id;
+        this.parent = player;
     }
 
     public int getCurrPosition() {
@@ -22,5 +27,18 @@ public class Button {
 
     public void setStatus(ButtonStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String getColor() {
+        return this.parent.getColor();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Player getParent() {
+        return parent;
     }
 }

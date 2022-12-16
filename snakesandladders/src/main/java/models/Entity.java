@@ -2,7 +2,7 @@ package models;
 
 import exceptions.GameBuilderException;
 
-public abstract class Entity {
+public abstract class Entity implements Drawable {
 
     private int start;
     private int end;
@@ -48,4 +48,8 @@ public abstract class Entity {
         }
     }
 
+    @Override
+    public String getColor() {
+        return this.entityType.getColor();
+    }
 }

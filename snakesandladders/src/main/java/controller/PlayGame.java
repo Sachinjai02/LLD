@@ -13,6 +13,8 @@ public class PlayGame {
 
         while(game.getStatus() != GameStatus.FINISHED) {
 
+            drawBoard(game);
+
             //get current player who needs to make a move
             int playerIdx = getNextPlayerWhoIsToMove(game);
             //Player make move should set the Button status, player status to finished if all his buttons are completed
@@ -27,6 +29,9 @@ public class PlayGame {
             }
 
         }
+    }
+
+    private void drawBoard(Game game) {
     }
 
     private int getNextPlayerWhoIsToMove(Game game) {

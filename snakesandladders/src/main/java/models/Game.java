@@ -8,10 +8,25 @@ import java.util.*;
 
 public class Game {
 
+    public static final String RESET = "\033[0m";  // Text Reset
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String BLUE = "\033[0;34m";    // BLUE
+    public static final String PURPLE = "\033[0;35m";  // PURPLE
+    public static final String CYAN = "\033[0;36m";    // CYAN
+    public static final String WHITE = "\033[0;37m";   // WHITE
+
+    private static final String[] colors = new String[] { BLACK,
+            GREEN, RED,  BLUE, YELLOW, BLACK, YELLOW, PURPLE,
+            CYAN, WHITE };
     private Board board;
     private Dice dice;
     private List<Player> playerList;
     private LeaderBoard leaderBoard;
+
+    private Map<Integer, Set<Drawable>> drawablesMap;
 
     public void setStatus(GameStatus status) {
         this.status = status;
@@ -160,16 +175,23 @@ public class Game {
             //Board
             Board board = new Board(boardSize);
             Map<Integer, Entity> positionToEntityMap = board.getPositionToEntityMap();
+            Map<Integer, Set<Drawable>> map = new HashMap<>();
             for(Entity entity : entities) {
                 positionToEntityMap.put(entity.getStart(), entity);
             }
 
             List<Player> players = new ArrayList<>();
 
+            Set<Drawable> allButtons = new HashSet<>();
             for(String name: playerNames) {
-                Player player = new Player(numButtons, name);
+                int idx = players.size();
+                Player player = new Player(numButtons,
+                        name, Character.valueOf( (char) ('A' + (idx+1)))
+                , idx < colors.length ? colors[idx] : "");
                 players.add(player);
+                allButtons.addAll(player.getButtonList());
             }
+            map.put(0, allButtons);
 
             game.board = board;
             game.status = GameStatus.IN_PROGRESS;
@@ -180,6 +202,8 @@ public class Game {
             game.moveStrategy = moveStrategy;
             game.unlockStrategy = unlockStrategy;
             game.moves = new ArrayList<>();
+            game.drawablesMap = map;
+
             return game;
         }
 
