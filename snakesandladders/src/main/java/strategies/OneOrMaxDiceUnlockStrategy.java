@@ -1,5 +1,6 @@
 package strategies;
 
+import constants.GameConsoleConstants;
 import models.*;
 
 import java.util.HashSet;
@@ -10,6 +11,7 @@ public class OneOrMaxDiceUnlockStrategy implements ButtonUnlockStrategy{
     @Override
     public void unlock(Game game, Button button, int diceValue, int maxNumber) {
         Board board = game.getBoard();
+        String color = button.getColor();
         Map<Integer, Set<Drawable>> drawablesMap = board.getDrawablesMap();
         if(diceValue == 1 || diceValue == maxNumber) {
             drawablesMap.get(0).remove(button);
@@ -19,9 +21,9 @@ public class OneOrMaxDiceUnlockStrategy implements ButtonUnlockStrategy{
             button.setCurrPosition(1);
             button.setStatus(ButtonStatus.IN_GAME);
 
-            System.out.println(button.getId() + " Button opened!");
+            System.out.println(color + button.getId() + " Button opened!" + GameConsoleConstants.RESET);
         } else {
-            System.out.println("Can't open yet! Please try in next chance :P");
+            System.out.println(GameConsoleConstants.RED + "Can't open yet! Please try in next chance" + GameConsoleConstants.RESET);
         }
     }
 }

@@ -1,15 +1,15 @@
 package controller;
 
+import constants.GameConsoleConstants;
 import models.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class PlayGame {
 
-    private static final String BLACK_UNDERLINED  = "\033[4;30m";
+
     public static final String RESET = "\033[0m";
     public void play(Game game) {
         List<Player> playersFinishedInOrder = game.getLeaderBoard().getPlayersFinishedInOrder();
@@ -40,13 +40,13 @@ public class PlayGame {
         int sizeOfBoard = game.getBoard().getSize();
         Map<Integer, Entity> snakesAndOthers = game.getBoard().getPositionToEntityMap();
         Map<Integer, Set<Drawable>> drawablesMap = game.getBoard().getDrawablesMap();
-        int maxSpacingAcrossCells = game.getPlayerList().size() * game.getNumButtons() * 3;
+        int maxSpacingAcrossCells = game.getPlayerList().size() * game.getNumberOfButtonsPerPlayer() * 3 + 1;
 
         //say 10 things in one line
         int r = Math.ceilDiv(sizeOfBoard,10);
         for(int i=0;i<r;++i) {
             for(int j=i*10;j < Math.min(i*10+10, sizeOfBoard);++j) {
-                System.out.print( BLACK_UNDERLINED + String.format("%-" + maxSpacingAcrossCells + "s",  +  (j+1) ));
+                System.out.print(GameConsoleConstants.BLACK_UNDERLINED + String.format("%-" + maxSpacingAcrossCells + "s",  +  (j+1) ));
             }
             System.out.println(RESET);
             for(int j=i*10;j < Math.min(i*10+10, sizeOfBoard);++j) {

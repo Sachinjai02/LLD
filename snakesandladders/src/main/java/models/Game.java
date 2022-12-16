@@ -5,22 +5,13 @@ import strategies.ButtonUnlockStrategy;
 import strategies.HandleMoveStrategy;
 
 import java.util.*;
-
+import static constants.GameConsoleConstants.*;
 public class Game {
 
-    public static final String RESET = "\033[0m";  // Text Reset
-    public static final String BLACK = "\033[0;30m";   // BLACK
-    public static final String RED = "\033[0;31m";     // RED
-    public static final String GREEN = "\033[0;32m";   // GREEN
-    public static final String YELLOW = "\033[0;33m";  // YELLOW
-    public static final String BLUE = "\033[0;34m";    // BLUE
-    public static final String PURPLE = "\033[0;35m";  // PURPLE
-    public static final String CYAN = "\033[0;36m";    // CYAN
-    public static final String WHITE = "\033[0;37m";   // WHITE
 
     private static final String[] colors = new String[] {
-            GREEN, BLUE, YELLOW, RED, PURPLE,
-            CYAN, WHITE, BLACK};
+            BLUE, YELLOW, GREEN, PURPLE,
+            CYAN, WHITE, BLACK, RED};
     private Board board;
     private Dice dice;
     private List<Player> playerList;
@@ -33,7 +24,7 @@ public class Game {
     }
 
     private GameStatus status;
-    private int numButtons;
+    private int numberOfButtonsPerPlayer;
 
     private ButtonUnlockStrategy unlockStrategy;
 
@@ -66,8 +57,8 @@ public class Game {
         return status;
     }
 
-    public int getNumButtons() {
-        return numButtons;
+    public int getNumberOfButtonsPerPlayer() {
+        return numberOfButtonsPerPlayer;
     }
 
     public ButtonUnlockStrategy getUnlockStrategy() {
@@ -90,7 +81,8 @@ public class Game {
     public static class GameBuilder {
         private int boardSize;
         private int maxDiceNumber;
-        private int numButtons;
+        private int numberOfButtonsPerPlayer;
+
 
         private List<Entity> entities;
 
@@ -127,14 +119,6 @@ public class Game {
             return this;
         }
 
-        public int getNumButtons() {
-            return numButtons;
-        }
-
-        public GameBuilder setNumButtons(int numButtons) {
-            this.numButtons = numButtons;
-            return this;
-        }
 
         public Game build() {
             //validations
@@ -150,7 +134,7 @@ public class Game {
                 throw new GameBuilderException("There should be at least two players to play the game");
             }
 
-            if(this.numButtons < 1) {
+            if(this.numberOfButtonsPerPlayer < 1) {
                 throw new GameBuilderException("There should be at least 1 button for each Player");
             }
 
@@ -186,7 +170,7 @@ public class Game {
             Set<Drawable> allButtons = new HashSet<>();
             for(String name: playerNames) {
                 int idx = players.size();
-                Player player = new Player(numButtons,
+                Player player = new Player(numberOfButtonsPerPlayer,
                         name, Character.valueOf( (char) ('A' + (idx)))
                 , idx < colors.length ? colors[idx] : "");
                 players.add(player);
@@ -198,7 +182,7 @@ public class Game {
             game.status = GameStatus.IN_PROGRESS;
             game.dice = new Dice(maxDiceNumber);
             game.leaderBoard = new LeaderBoard();
-            game.numButtons = numButtons;
+            game.numberOfButtonsPerPlayer = numberOfButtonsPerPlayer;
             game.playerList = players;
             game.moveStrategy = moveStrategy;
             game.unlockStrategy = unlockStrategy;
@@ -235,6 +219,13 @@ public class Game {
             return this;
         }
 
+        public int getNumberOfButtonsPerPlayer() {
+            return numberOfButtonsPerPlayer;
+        }
 
+        public GameBuilder setNumberOfButtonsPerPlayer(int numberOfButtonsPerPlayer) {
+            this.numberOfButtonsPerPlayer = numberOfButtonsPerPlayer;
+            return this;
+        }
     }
 }

@@ -1,10 +1,13 @@
 package models;
 
+import constants.GameConsoleConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Player  {
+
 
     private List<Button> buttonList;
     private String name;
@@ -20,7 +23,7 @@ public class Player  {
         this.name = name;
         this.color = color;
         for(int i=0;i<numButtons;++i) {
-            Button button = new Button(id.toString() + i, this);
+            Button button = new Button(id.toString() + (i+1), this);
             this.buttonList.add(button);
         }
         this.status = PlayerStatus.IN_GAME;
@@ -28,17 +31,18 @@ public class Player  {
 
     public Move makeMove(Game game) {
 
-        System.out.println("Hey " + this.name + "! Please enter which button to move");
+        System.out.print(this.color + "Hey " + this.name + "! Please enter which button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
         Scanner scanner = new Scanner(System.in);
         int buttonIdx = scanner.nextInt();
-        while(this.buttonList.get(buttonIdx).getStatus() == ButtonStatus.COMPLETED) {
-            System.out.println("This button is already finished, please try again");
+        while(this.buttonList.get(buttonIdx-1).getStatus() == ButtonStatus.COMPLETED) {
+            System.out.println(GameConsoleConstants.RED + "This button is already finished, please select another button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
             buttonIdx = scanner.nextInt();
         }
-        Button selectedButton = this.buttonList.get(buttonIdx);
+        Button selectedButton = this.buttonList.get(buttonIdx-1);
         Move move = new Move(selectedButton, selectedButton.getCurrPosition());
         int diceValue = game.getDice().roll();
-        System.out.println("Rolling the dice ... Got " + diceValue);
+        System.out.println(this.color  + "Rolling the dice ...");
+        System.out.println(this.color + "Got " + diceValue + "! ");
 
         if(selectedButton.getStatus().equals(ButtonStatus.LOCKED)) {
             game.getUnlockStrategy().unlock(game, selectedButton, diceValue, game.getDice().getMaxNumber());
