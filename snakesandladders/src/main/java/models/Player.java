@@ -4,6 +4,7 @@ import constants.GameConsoleConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player  {
@@ -30,18 +31,30 @@ public class Player  {
     }
 
     public Move makeMove(Game game) {
-
-        System.out.print(this.color + "Hey " + this.name + "! Please enter which button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
+        int numberOfButtons = game.getNumberOfButtonsPerPlayer();
+        int buttonIdx = 1;
         Scanner scanner = new Scanner(System.in);
-        int buttonIdx = scanner.nextInt();
-        while(this.buttonList.get(buttonIdx-1).getStatus() == ButtonStatus.COMPLETED) {
-            System.out.println(GameConsoleConstants.RED + "This button is already finished, please select another button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
+        if(numberOfButtons > 1) {
+            System.out.print(this.color + "Hey " + this.name + "! Please enter which button to move [1-" + numberOfButtons + "] and roll the dice: ");
             buttonIdx = scanner.nextInt();
+            while(this.buttonList.get(buttonIdx-1).getStatus() == ButtonStatus.COMPLETED) {
+                System.out.println(GameConsoleConstants.RED + "This button is already finished, please select another button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
+                buttonIdx = scanner.nextInt();
+            }
+        } else {
+            System.out.print(this.color + "Hey " + this.name + "! Press enter to roll the dice: ");
+            scanner.nextLine();
         }
+
         Button selectedButton = this.buttonList.get(buttonIdx-1);
         Move move = new Move(selectedButton, selectedButton.getCurrPosition());
         int diceValue = game.getDice().roll();
         System.out.println(this.color  + "Rolling the dice ...");
+        try {
+            Thread.sleep(new Random().nextInt(2000));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(this.color + "Got " + diceValue + "! ");
 
         if(selectedButton.getStatus().equals(ButtonStatus.LOCKED)) {
