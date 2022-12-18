@@ -32,6 +32,7 @@ public class Player  {
 
     public Move makeMove(Game game) {
         int numberOfButtons = game.getNumberOfButtonsPerPlayer();
+
         int buttonIdx = 1;
         Scanner scanner = new Scanner(System.in);
 
@@ -49,6 +50,10 @@ public class Player  {
         if(numberOfButtons > 1) {
             System.out.print(this.color + "Please enter which button to move [1-" + numberOfButtons + "]: ");
             buttonIdx = scanner.nextInt();
+            while(buttonIdx < 1 || buttonIdx > numberOfButtons) {
+                System.out.println(GameConsoleConstants.RED + "Invalid button chosen, please select correct button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
+                buttonIdx = scanner.nextInt();
+            }
             while(this.buttonList.get(buttonIdx-1).getStatus() == ButtonStatus.COMPLETED) {
                 System.out.println(GameConsoleConstants.RED + "This button is already finished, please select another button to move [1-" + game.getNumberOfButtonsPerPlayer() + "] : ");
                 buttonIdx = scanner.nextInt();

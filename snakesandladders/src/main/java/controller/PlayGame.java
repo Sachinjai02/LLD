@@ -30,6 +30,7 @@ public class PlayGame {
             game.getMoves().add(move);
 
             if(playersFinishedInOrder.size() == numPlayers-1) {
+                drawBoard(game);
                 game.setStatus(GameStatus.FINISHED);
             }
 
