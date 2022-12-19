@@ -1,9 +1,6 @@
 package com.study.splitwise.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,6 +17,6 @@ public class Group extends BaseModel {
     @OneToOne
     private User createdBy;
     private Date createdAt;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Expense> expenses;
 }

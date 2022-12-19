@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 public class Expense extends BaseModel {
+    private String title;
     private double amount;
     @OneToOne
     private User createdBy;
