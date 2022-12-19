@@ -31,7 +31,19 @@ public class UserController {
     }
 
     public BaseResponseDto<Boolean> login(String phoneNumber, String password) {
-        return new BaseResponseDto<>(this.userService.login(phoneNumber, password), "Success");
+        BaseResponseDto<Boolean> responseDto = new BaseResponseDto<>();
+        try {
+            if(this.userService.login(phoneNumber, password)) {
+                responseDto.setStatus("Success");
+            } else {
+                responseDto.setStatus("Invalid Auth");
+                responseDto.setMessage("User authentication details are not valid");
+            }
+        } catch (Exception e) {
+            responseDto.setMessage("Could not authenticate : " + e.getMessage());
+            responseDto.setStatus("Failed");
+        }
+        return responseDto;
     }
 
     public BaseResponseDto<Boolean> updateProfile(UpdateUserRequestDto requestDto) {

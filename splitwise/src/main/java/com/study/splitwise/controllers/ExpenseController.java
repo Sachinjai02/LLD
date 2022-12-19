@@ -23,6 +23,7 @@ public class ExpenseController {
             , expenseDto.getOwedBy(), expenseDto.getCreatedByUserId(), expenseDto.getGroupId()));
             responseDto.setStatus("Success");
         }catch(Exception e) {
+            e.printStackTrace();
             responseDto.setStatus("Failed");
             responseDto.setMessage("Failure in expense creation : " + e.getMessage());
         }

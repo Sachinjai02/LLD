@@ -2,10 +2,10 @@ package com.study.splitwise.services;
 
 import com.study.splitwise.models.Expense;
 import com.study.splitwise.models.Group;
-import com.study.splitwise.models.User;
 import com.study.splitwise.models.UserExpense;
 import com.study.splitwise.repositories.ExpenseRepository;
 import com.study.splitwise.repositories.GroupRepository;
+import com.study.splitwise.repositories.UserExpenseRepository;
 import com.study.splitwise.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,14 @@ public class ExpenseService {
     private UserRepository userRepository;
     private GroupRepository groupRepository;
 
+    private UserExpenseRepository userExpenseRepository;
+
     @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository, UserRepository userRepository, GroupRepository groupRepository) {
+    public ExpenseService(ExpenseRepository expenseRepository, UserRepository userRepository, GroupRepository groupRepository, UserExpenseRepository userExpenseRepository) {
         this.expenseRepository = expenseRepository;
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
+        this.userExpenseRepository = userExpenseRepository;
     }
 
     public Expense createExpense(Double amount, String name, String desc, Map<Long, Double> paidBy, Map<Long, Double> owedBy, Long createdById, Long groupId) {
@@ -37,18 +40,21 @@ public class ExpenseService {
         expense.setDescription(desc);
         expense.setTitle(name);
         expense.setAmount(amount);
+
+        //save expense
+        Expense expenseDb = expenseRepository.save(expense);
+
         List<UserExpense> paidByList = new ArrayList<>();
         List<UserExpense> owedByList = new ArrayList<>();
 
-        Expense finalExp = expense;
 
         //Add paidBy entries
         userRepository.findAllById(paidBy.entrySet().stream()
-                .map(entry -> entry.getKey()).collect(Collectors.toList()))
+                        .map(entry -> entry.getKey()).collect(Collectors.toList()))
                 .forEach(user -> {
                     UserExpense userExpense = new UserExpense();
                     userExpense.setUser(user);
-                    userExpense.setExpense(finalExp);
+                    userExpense.setExpense(expenseDb);
                     userExpense.setAmount(paidBy.get(user.getId()));
                     paidByList.add(userExpense);
                 });
@@ -60,21 +66,24 @@ public class ExpenseService {
                 .forEach(user -> {
                     UserExpense userExpense = new UserExpense();
                     userExpense.setUser(user);
-                    userExpense.setExpense(finalExp);
-                    userExpense.setAmount(paidBy.get(user.getId()));
+                    userExpense.setExpense(expenseDb);
+                    userExpense.setAmount(owedBy.get(user.getId()));
                     owedByList.add(userExpense);
                 });
-        expense.setPaidBy(paidByList);
-        expense.setOwedBy(owedByList);
 
-        //save expense
-        expense = expenseRepository.save(expense);
 
+        List<UserExpense> paidByListDb = userExpenseRepository.saveAll(paidByList);
+        List<UserExpense> owedByListDb = userExpenseRepository.saveAll(owedByList);
+
+        expenseDb.setPaidBy(paidByList);
+        expenseDb.setOwedBy(owedByList);
+
+        expense = expenseRepository.save(expenseDb);
         //save group
         if(groupId != null) {
             Group group = groupRepository.findById(groupId).get();
             group.getExpenses().size();
-            group.getExpenses().add(expense);
+            group.getExpenses().add(expenseDb);
             groupRepository.save(group);
         }
 
