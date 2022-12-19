@@ -17,8 +17,7 @@ public class Expense extends BaseModel {
     private User createdBy;
     private String description;
     private Date createdAt;
-    @OneToMany
-    private List<UserExpense> paidBy;
-    @OneToMany
-    private List<UserExpense> owedBy;
+    @OneToMany(mappedBy = "expense")
+    private List<UserExpense> userExpenses;
+
 }

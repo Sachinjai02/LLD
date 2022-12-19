@@ -1,6 +1,7 @@
 package com.study.splitwise.services;
 
 import com.study.splitwise.models.Expense;
+import com.study.splitwise.models.ExpenseType;
 import com.study.splitwise.models.Group;
 import com.study.splitwise.models.UserExpense;
 import com.study.splitwise.repositories.ExpenseRepository;
@@ -44,8 +45,7 @@ public class ExpenseService {
         //save expense
         Expense expenseDb = expenseRepository.save(expense);
 
-        List<UserExpense> paidByList = new ArrayList<>();
-        List<UserExpense> owedByList = new ArrayList<>();
+        List<UserExpense> userExpenseList = new ArrayList<>();
 
 
         //Add paidBy entries
@@ -55,34 +55,27 @@ public class ExpenseService {
                     UserExpense userExpense = new UserExpense();
                     userExpense.setUser(user);
                     userExpense.setExpense(expenseDb);
+                    userExpense.setExpenseType(ExpenseType.PAID);
                     userExpense.setAmount(paidBy.get(user.getId()));
-                    paidByList.add(userExpense);
+                    userExpenseList.add(userExpense);
                 });
 
-
-        //Add owedBy entries
         userRepository.findAllById(owedBy.entrySet().stream()
                         .map(entry -> entry.getKey()).collect(Collectors.toList()))
                 .forEach(user -> {
                     UserExpense userExpense = new UserExpense();
                     userExpense.setUser(user);
                     userExpense.setExpense(expenseDb);
+                    userExpense.setExpenseType(ExpenseType.OWES);
                     userExpense.setAmount(owedBy.get(user.getId()));
-                    owedByList.add(userExpense);
+                    userExpenseList.add(userExpense);
                 });
 
 
-        List<UserExpense> paidByListDb = userExpenseRepository.saveAll(paidByList);
-        List<UserExpense> owedByListDb = userExpenseRepository.saveAll(owedByList);
-
-        expenseDb.setPaidBy(paidByList);
-        expenseDb.setOwedBy(owedByList);
-
-        expense = expenseRepository.save(expenseDb);
+        expenseDb.setUserExpenses( userExpenseRepository.saveAll(userExpenseList));
         //save group
         if(groupId != null) {
             Group group = groupRepository.findById(groupId).get();
-            group.getExpenses().size();
             group.getExpenses().add(expenseDb);
             groupRepository.save(group);
         }

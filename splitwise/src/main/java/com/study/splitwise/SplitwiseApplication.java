@@ -4,10 +4,8 @@ import com.study.splitwise.controllers.ExpenseController;
 import com.study.splitwise.controllers.GroupController;
 import com.study.splitwise.controllers.SettleUpController;
 import com.study.splitwise.controllers.UserController;
-import com.study.splitwise.dtos.CreateExpenseDto;
-import com.study.splitwise.dtos.CreateGroupRequestDto;
-import com.study.splitwise.dtos.RegisterUserRequestDto;
-import com.study.splitwise.dtos.RegisterUserResponseDto;
+import com.study.splitwise.controllers.pojos.Transaction;
+import com.study.splitwise.dtos.*;
 import com.study.splitwise.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -60,6 +58,7 @@ public class SplitwiseApplication implements CommandLineRunner {
         groupRequestDto.setMembers(Arrays.asList(sachinId, friend2Id, friend1Id, friend3Id));
         Long goaTrip = groupController.createGroup(groupRequestDto).getData().getId();
 
+
         //Create individual expenses with friend1 & Sachin
         createExpense(500D, "Borrowed by Sachin", "Borrowed by Sachin for lunch",
                 Arrays.asList(friend1Id), Arrays.asList(500D),
@@ -72,18 +71,29 @@ public class SplitwiseApplication implements CommandLineRunner {
                 Arrays.asList(friend1Id, friend2Id, friend3Id), Arrays.asList(333.33D, 333.33D, 333.33D),
                 friend1Id, null);
 
+
+        //create group expense with f1, f2, and f3
+        createExpense(3000D, "Fun ride", "rented bikes",
+                Arrays.asList(friend2Id), Arrays.asList(3000D),
+                Arrays.asList(friend1Id, friend2Id, friend3Id), Arrays.asList(1000D, 1000D, 1000D),
+                friend3Id, goaTrip);
+
+        //create group expense with all friends
+        createExpense(2500D, "Lunch", "Lunch on Beach!",
+                Arrays.asList(friend1Id), Arrays.asList(2500D),
+                Arrays.asList(friend1Id, friend2Id, friend3Id,sachinId), Arrays.asList(600D, 600D, 700D,600D),
+                friend3Id, goaTrip);
+
+
         //Create group expense with all friends
         createExpense(8000D, "Beer", "Beer all night!!",
                 Arrays.asList(friend1Id, friend2Id), Arrays.asList(5000D, 3000D),
                 Arrays.asList(friend1Id, friend2Id, friend3Id, sachinId), Arrays.asList(2000D, 2000D, 2000D,2000D),
                 friend1Id, goaTrip);
 
-        //create group expense with f1, f2, and f3
-        createExpense(3000D, "Fun ride", "rented bikes",
-                Arrays.asList(friend3Id), Arrays.asList(3000D),
-                Arrays.asList(friend1Id, friend2Id, friend3Id), Arrays.asList(1000D, 1000D, 1000D),
-                friend3Id, goaTrip);
 
+        BaseResponseDto<List<Transaction>> responseDto = settleUpController.settleGroup(goaTrip);
+        System.out.println(responseDto.getData());
 
     }
 
