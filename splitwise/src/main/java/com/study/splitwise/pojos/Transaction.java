@@ -1,4 +1,4 @@
-package com.study.splitwise.controllers.pojos;
+package com.study.splitwise.pojos;
 
 import com.study.splitwise.models.User;
 import lombok.AllArgsConstructor;

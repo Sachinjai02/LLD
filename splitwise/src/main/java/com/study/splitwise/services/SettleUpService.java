@@ -1,16 +1,14 @@
 package com.study.splitwise.services;
 
-import com.study.splitwise.controllers.pojos.Transaction;
+import com.study.splitwise.pojos.Transaction;
 import com.study.splitwise.models.Expense;
 import com.study.splitwise.models.UserExpense;
 import com.study.splitwise.repositories.GroupRepository;
 import com.study.splitwise.repositories.UserExpenseRepository;
 import com.study.splitwise.strategies.ExpenseSettlementStrategy;
-import com.study.splitwise.strategies.MinMaxExpenseSettlementStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

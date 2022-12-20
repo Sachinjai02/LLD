@@ -1,6 +1,6 @@
 package com.study.splitwise.controllers;
 
-import com.study.splitwise.controllers.pojos.Transaction;
+import com.study.splitwise.pojos.Transaction;
 import com.study.splitwise.dtos.BaseResponseDto;
 import com.study.splitwise.services.SettleUpService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import com.study.splitwise.controllers.ExpenseController;
 import com.study.splitwise.controllers.GroupController;
 import com.study.splitwise.controllers.SettleUpController;
 import com.study.splitwise.controllers.UserController;
-import com.study.splitwise.controllers.pojos.Transaction;
+import com.study.splitwise.pojos.Transaction;
 import com.study.splitwise.dtos.*;
 import com.study.splitwise.models.User;
 import org.springframework.beans.factory.annotation.Autowired;

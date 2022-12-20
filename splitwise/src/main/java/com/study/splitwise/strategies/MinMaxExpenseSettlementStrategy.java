@@ -1,6 +1,6 @@
 package com.study.splitwise.strategies;
 
-import com.study.splitwise.controllers.pojos.Transaction;
+import com.study.splitwise.pojos.Transaction;
 import com.study.splitwise.models.ExpenseType;
 import com.study.splitwise.models.User;
 import com.study.splitwise.models.UserExpense;
